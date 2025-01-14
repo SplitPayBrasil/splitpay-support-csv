@@ -4,7 +4,7 @@ namespace Splitpay\Support\Csv\Contract;
 
 declare(strict_types=1);
 
-interface CsvParserInterface
+interface ParserInterface
 {
     public function parseFromArray(array $array): string;
 

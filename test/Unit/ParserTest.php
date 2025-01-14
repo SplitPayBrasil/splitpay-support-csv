@@ -3,25 +3,25 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Splitpay\Support\Csv\CsvColumnLayout;
-use Splitpay\Support\Csv\CsvLayout;
-use Splitpay\Support\Csv\CsvParser;
+use Splitpay\Support\Csv\Column;
+use Splitpay\Support\Csv\Layout;
+use Splitpay\Support\Csv\Parser;
 
-class CsvParserTest extends TestCase
+class ParserTest extends TestCase
 {
     public function testMethodParseFromArrayExists():void
     {
-        $this->assertTrue(method_exists(CsvParser::class, 'parseFromArray'));
+        $this->assertTrue(method_exists(Parser::class, 'parseFromArray'));
     }
 
     public function testMethodParseFromArrayReturnErrorWhenDifferentStructureLayoutPassed(): void
     {
-        $layout =   new CsvLayout([
-            new CsvColumnLayout(name: 'User', type: 'string'),
-            new CsvColumnLayout(name: 'Email', type: 'string')
+        $layout =   new Layout([
+            new Column(name: 'User', type: 'string'),
+            new Column(name: 'Email', type: 'string')
         ]);
 
-        $parser = new CsvParser($layout);
+        $parser = new Parser($layout);
 
         $array  =   [
             0 => ['Name' => 'Esdras', 'Age' => 36],
@@ -34,12 +34,12 @@ class CsvParserTest extends TestCase
 
     public function testMethodParseFromArrayReturnCurrectCsvExpected(): void
     {
-        $layout =   new CsvLayout([
-            new CsvColumnLayout(name: 'User', type: 'string'),
-            new CsvColumnLayout(name: 'Email', type: 'string')
+        $layout =   new Layout([
+            new Column(name: 'User', type: 'string'),
+            new Column(name: 'Email', type: 'string')
         ]);
 
-        $parser = new CsvParser($layout);
+        $parser = new Parser($layout);
 
         $array  =   [
             0 => ['User' => 'Esdras', 'Email' => 'esdras@splitpaybrasil.com.br'],

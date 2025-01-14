@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Splitpay\Support\Csv\Contract;
 
-interface CsvColumnLayoutInterface
+interface ColumnInterface
 {
     public function getName(): string;
 

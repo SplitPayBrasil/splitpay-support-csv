@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Splitpay\Support\Csv;
 
-use Splitpay\Support\Csv\Contract\CsvColumnLayoutInterface;
+use Splitpay\Support\Csv\Contract\ColumnInterface;
 
-class CsvColumnLayout implements CsvColumnLayoutInterface
+class Column implements ColumnInterface
 {
     /**
      * @param string $name The column name

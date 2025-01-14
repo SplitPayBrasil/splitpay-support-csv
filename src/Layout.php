@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Splitpay\Support\Csv;
 
-use Splitpay\Support\Csv\Contract\CsvLayoutInterface;
-use Splitpay\Support\Csv\Contract\CsvColumnLayoutInterface;
+use Splitpay\Support\Csv\Contract\LayoutInterface;
+use Splitpay\Support\Csv\Contract\ColumnInterface;
 
-class CsvLayout implements CsvLayoutInterface
+class Layout implements LayoutInterface
 {
     /**
-     * @param CsvColumnLayoutInterface[] $columns
+     * @param ColumnInterface[] $columns
      * @param string $columnSeparator
      * @param string $lineSeparator
      * @param string[] $quotedTypes
@@ -35,7 +35,7 @@ class CsvLayout implements CsvLayoutInterface
         );
     }
 
-    public function getColumn(string $columnName): CsvColumnLayoutInterface
+    public function getColumn(string $columnName): ColumnInterface
     {
         return current(
             array_filter(
@@ -46,14 +46,14 @@ class CsvLayout implements CsvLayoutInterface
     }
 
     /**
-     * @return CsvColumnLayout[]
+     * @return Column[]
      */
     public function getColumns(): array
     {
         return $this->columns;
     }
 
-    public function addColumn(CsvColumnLayoutInterface $column): static
+    public function addColumn(ColumnInterface $column): static
     {
         if (! in_array($column, $this->columns)) {
             $this->columns[]    =   $column;
@@ -62,7 +62,7 @@ class CsvLayout implements CsvLayoutInterface
         return $this;
     }
 
-    public function removeColumn(CsvColumnLayoutInterface $column): static
+    public function removeColumn(ColumnInterface $column): static
     {
         $key    =   array_search($column, $this->columns);
         if ($key !== false) {
@@ -112,7 +112,7 @@ class CsvLayout implements CsvLayoutInterface
     private function getHeaders(): array
     {
         return array_map(
-            fn(CsvColumnLayoutInterface $c) => $c->getAlias()?? $c->getName(),
+            fn(ColumnInterface $c) => $c->getAlias()?? $c->getName(),
             $this->columns
         );
     }

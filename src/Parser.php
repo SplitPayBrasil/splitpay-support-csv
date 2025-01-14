@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Splitpay\Support\Csv;
 
 use RuntimeException;
-use Splitpay\Support\Csv\Contract\CsvColumnLayoutInterface;
-use Splitpay\Support\Csv\Contract\CsvLayoutInterface;
+use Splitpay\Support\Csv\Contract\ColumnInterface;
+use Splitpay\Support\Csv\Contract\LayoutInterface;
 
-class CsvParser
+class Parser
 {
     public function __construct(
-        private CsvLayoutInterface $layout
+        private LayoutInterface $layout
     )
     {
     }
@@ -44,7 +44,7 @@ class CsvParser
         }
     }
 
-    private function columnValidate(CsvColumnLayoutInterface $column, array $schema, ?int $key): void
+    private function columnValidate(ColumnInterface $column, array $schema, ?int $key): void
     {
         $columnName     =   $column->getName();
         $columnType     =   $column->getType();
@@ -72,7 +72,7 @@ class CsvParser
         return implode($this->layout->getColumnSeparator(), $columns);
     }
 
-    private function normalizeColumn(CsvColumnLayoutInterface $column, mixed $value): string
+    private function normalizeColumn(ColumnInterface $column, mixed $value): string
     {
         $value  =   $column->applyFilters($value);
         if (in_array($column->getType(), $this->layout->getQuotedTypes())) {
