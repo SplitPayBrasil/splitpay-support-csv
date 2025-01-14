@@ -1,0 +1,19 @@
+{
+    "name": "splitpay/support-csv",
+    "authors":[
+        {"name": "Esdras Schonevald"}
+    ],
+    "autoload": {
+        "psr-4": {
+            "Splitpay\\Support\\Csv\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Splitpay\\Support\\Csv\\Test\\": "test/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    }
+}
