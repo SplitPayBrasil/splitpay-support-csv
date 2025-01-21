@@ -10,22 +10,25 @@ class Column implements ColumnInterface
 {
     /**
      * @param string $name The column name
-     * @param string $type The column type, default 'string'
+     * @param Type|'boolean'|'integer'|'double'|'string'|'array'|'object'|'resource'|'NULL'|'unknown type'|'resource (closed)' $type The column type, default Type::String
      * @param string|null $alias The alias replaces the column name when generated csv
      * @param callable[]|null $filters Filters are called before csv generation. Eg.: ['trim', 'strtolower']
      */
     public function __construct(
         private string $name,
-        private string $type = 'string',
+        private Type|string $type = Type::String,
         private ?string $alias = null,
         private ?array $filters = []
     ) {
+        if (is_string($type)) {
+            $this->type = Type::from($type);
+        }
     }
 
     public function applyFilters(mixed $value): mixed
     {
         foreach ($this->filters as $filter) {
-            $value  =   filter_var($value, FILTER_CALLBACK, ['options' => $filter ]);
+            $value  =   call_user_func($filter, $value);
         }
 
         return $value;
@@ -39,7 +42,7 @@ class Column implements ColumnInterface
 
     public function getType(): string
     {
-        return $this->type;
+        return $this->type->value;
     }
 
     public function getAlias(): ?string
