@@ -50,7 +50,11 @@ class Parser
         $isNullable     =   $column->isNullable();
 
         foreach ($schema as $line) {
-            if (!isset($line[$columnName]) && !isset($line[$key]) && !$isNullable) {
+            if (!isset($line[$columnName]) && !isset($line[$key])) {
+                if ($isNullable) {
+                    continue;
+                }
+
                 throw new RuntimeException(
                     sprintf(
                         'Invalid schema. The column "%s" does not exist.',
@@ -60,10 +64,6 @@ class Parser
             }
 
             $type   =   gettype($line[$columnName] ?? $line[$key]);
-
-            if ($type === Type::NULL && $isNullable) {
-                continue;
-            }
 
             if ($type !== $columnType) {
                 throw new RuntimeException(
