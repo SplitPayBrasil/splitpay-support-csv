@@ -12,8 +12,7 @@ class Parser
 {
     public function __construct(
         private LayoutInterface $layout
-    )
-    {
+    ) {
     }
 
     public function parseFromArray(array $array): string
@@ -48,18 +47,24 @@ class Parser
     {
         $columnName     =   $column->getName();
         $columnType     =   $column->getType();
+        $isNullable     =   $column->isNullable();
 
         foreach ($schema as $line) {
-            if (!isset($line[$columnName]) && !isset($line[$key])) {
+            if (!isset($line[$columnName]) && !isset($line[$key]) && !$isNullable) {
                 throw new RuntimeException(
                     sprintf(
-                        'Invalid schema. The column "%s" does not exist',
+                        'Invalid schema. The column "%s" does not exist.',
                         $columnName
                     )
                 );
             }
 
             $type   =   gettype($line[$columnName] ?? $line[$key]);
+
+            if ($type === Type::NULL && $isNullable) {
+                continue;
+            }
+
             if ($type !== $columnType) {
                 throw new RuntimeException(
                     sprintf(

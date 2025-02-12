@@ -22,4 +22,6 @@ interface ColumnInterface
     public function removeFilter(callable $filter);
 
     public function applyFilters(mixed $value);
+
+    public function isNullable(): bool;
 }

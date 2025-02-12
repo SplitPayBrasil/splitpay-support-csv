@@ -13,12 +13,14 @@ class Column implements ColumnInterface
      * @param Type|'boolean'|'integer'|'double'|'string'|'array'|'object'|'resource'|'NULL'|'unknown type'|'resource (closed)' $type The column type, default Type::String
      * @param string|null $alias The alias replaces the column name when generated csv
      * @param callable[]|null $filters Filters are called before csv generation. Eg.: ['trim', 'strtolower']
+     * @param bool $nullable If FALSE this column can not be null. Default TRUE
      */
     public function __construct(
         private string $name,
         private Type|string $type = Type::String,
         private ?string $alias = null,
-        private ?array $filters = []
+        private ?array $filters = [],
+        private bool $nullable = true
     ) {
         if (is_string($type)) {
             $this->type = Type::from($type);
@@ -73,5 +75,10 @@ class Column implements ColumnInterface
         }
 
         return $this;
+    }
+
+    public function isNullable(): bool
+    {
+        return $this->nullable;
     }
 }
