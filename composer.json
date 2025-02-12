@@ -1,8 +1,10 @@
 {
     "name": "splitpay/support-csv",
+    "description": "Splitpay Support CSV is a PHP library designed to assist in handling CSV files. With this component, you can easily perform conversions such as 'Array to CSV' or 'JSON to CSV' with a structured and flexible API.",
     "authors":[
         {"name": "Esdras Schonevald"}
     ],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Splitpay\\Support\\Csv\\": "src/"
