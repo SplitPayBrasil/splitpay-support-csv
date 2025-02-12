@@ -51,12 +51,24 @@ class Parser
 
         foreach ($schema as $line) {
             if (!isset($line[$columnName]) && !isset($line[$key])) {
-                throw new RuntimeException('Invalid schema');
+                throw new RuntimeException(
+                    sprintf(
+                        'Invalid schema. The column "%s" does not exist',
+                        $columnName
+                    )
+                );
             }
 
             $type   =   gettype($line[$columnName] ?? $line[$key]);
             if ($type !== $columnType) {
-                throw new RuntimeException('Invalid schema');
+                throw new RuntimeException(
+                    sprintf(
+                        'Invalid schema. The column "%s" must be %s, %s given.',
+                        $columnName,
+                        $type,
+                        $columnType
+                    )
+                );
             }
         }
     }
